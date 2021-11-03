@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "388127620732",
+    "project_id": "pml4-7f26b",
+    "storage_bucket": "pml4-7f26b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388127620732:android:50d9db029b2592015a93f9",
+        "android_client_info": {
+          "package_name": "com.mfathiaflah.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388127620732-pse69dv6oji4kgnh146v3adsn64rtd6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mfathiaflah.chat_app",
+            "certificate_hash": "35d30b8a3a203d8640ef4c03670aeccb532636a9"
+          }
+        },
+        {
+          "client_id": "388127620732-6sro1cn2csbbq4inb23o1t38jvb4q7qt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB13X2emvVFOZTZbJSYOioLnvco4jJdB1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388127620732-6sro1cn2csbbq4inb23o1t38jvb4q7qt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
