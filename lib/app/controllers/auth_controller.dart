@@ -1,7 +1,7 @@
+import 'package:chat_app/app/data/models/user_model.dart';
 import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,6 +9,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthController extends GetxController {
   var isSkipIntro = false.obs;
   var isAuth = false.obs;
+
+  UserCredential? userCredential;
+  UserModel user = UserModel();
 
   GoogleSignIn _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
@@ -74,8 +77,9 @@ class AuthController extends GetxController {
           accessToken: googleAuth.accessToken,
         );
 
-        final userCredential =
-            FirebaseAuth.instance.signInWithCredential(credential);
+        await FirebaseAuth.instance
+            .signInWithCredential(credential)
+            .then((value) => userCredential = value);
 
         print("USER CREDENTIAL");
         print(userCredential);
@@ -88,21 +92,43 @@ class AuthController extends GetxController {
         box.write('skipIntro', true);
 
         // masukkan data ke firebase...
-        // CollectionReference users = firestore.collection('users');
+        CollectionReference users = firestore.collection('users');
 
-        // final checkuser = await users.doc();
+        final checkuser = await users.doc(_currentUser!.email).get();
 
-        // users.doc(_currentUser!.email).set({
-        //   "uid": userCredential!.user!.uid,
-        //   "name": _currentUser!.displayName,
-        //   "email": _currentUser!.email,
-        //   "photoUrl": _currentUser!.photoUrl,
-        //   "status": "",
-        //   "creationTime":
-        //       userCredential!.users!.metadata.creationTime!.toString(),
-        //   "lastSignInTime": userCredential!.metadata.lastSignInTime!.toString(),
-        //   "updatadTime": DateTime.now().toString(),
-        // });
+        if (checkuser.data() == null) {
+          users.doc(_currentUser!.email).set({
+            "uid": userCredential!.user!.uid,
+            "name": _currentUser!.displayName,
+            "email": _currentUser!.email,
+            "photoUrl": _currentUser!.photoUrl,
+            "status": "",
+            "creationTime":
+                userCredential!.user!.metadata.creationTime!.toString(),
+            "lastSignInTime":
+                userCredential!.user!.metadata.lastSignInTime!.toString(),
+            "updatadTime": DateTime.now().toString(),
+          });
+        } else {
+          users.doc(_currentUser!.email).update({
+            "lastSignInTime":
+                userCredential!.user!.metadata.lastSignInTime!.toString(),
+          });
+        }
+
+        final currUser = await users.doc(_currentUser!.email).get();
+        final currUserData = currUser.data() as Map<String, dynamic>;
+
+        user = UserModel(
+          uid: currUserData["uid"],
+          name: currUserData["name"],
+          email: currUserData["email"],
+          photoUrl: currUserData["photoUrl"],
+          status: currUserData["status"],
+          creationTime: currUserData["creationTime"],
+          lastSignInTime: currUserData["lastSignInTime"],
+          updatadTime: currUserData["updatadTime"],
+        );
 
         isAuth.value = true;
         Get.offAllNamed(Routes.HOME);
