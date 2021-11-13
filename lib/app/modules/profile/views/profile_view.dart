@@ -49,7 +49,7 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                 ),
                 Text(
-                  "Username",
+                  "${authC.user.name}",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class ProfileView extends GetView<ProfileController> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  "your.name@gmail.com",
+                  "${authC.user.email}",
                   style: TextStyle(
                     fontSize: 20,
                   ),
