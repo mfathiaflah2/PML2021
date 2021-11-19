@@ -1,4 +1,4 @@
-import 'package:chat_app/app/data/models/user_model.dart';
+import 'package:chat_app/app/data/models/users_model.dart';
 import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
