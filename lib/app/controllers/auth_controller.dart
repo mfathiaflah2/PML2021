@@ -97,7 +97,7 @@ class AuthController extends GetxController {
         final checkuser = await users.doc(_currentUser!.email).get();
 
         if (checkuser.data() == null) {
-          users.doc(_currentUser!.email).set({
+          await users.doc(_currentUser!.email).set({
             "uid": userCredential!.user!.uid,
             "name": _currentUser!.displayName,
             "email": _currentUser!.email,
@@ -110,7 +110,7 @@ class AuthController extends GetxController {
             "updatadTime": DateTime.now().toString(),
           });
         } else {
-          users.doc(_currentUser!.email).update({
+          await users.doc(_currentUser!.email).update({
             "lastSignInTime":
                 userCredential!.user!.metadata.lastSignInTime!.toString(),
           });
