@@ -16,7 +16,7 @@ class AuthController extends GetxController {
   GoogleSignIn _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
 
-  get firestore => null;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> firstInitialized() async {
     await autologin().then((value) {
@@ -104,15 +104,15 @@ class AuthController extends GetxController {
             "photoUrl": _currentUser!.photoUrl,
             "status": "",
             "creationTime":
-                userCredential!.user!.metadata.creationTime!.toString(),
-            "lastSignInTime":
-                userCredential!.user!.metadata.lastSignInTime!.toString(),
-            "updatadTime": DateTime.now().toString(),
+                userCredential!.user!.metadata.creationTime!.toIso8601String(),
+            "lastSignInTime": userCredential!.user!.metadata.lastSignInTime!
+                .toIso8601String(),
+            "updatadTime": DateTime.now().toIso8601String(),
           });
         } else {
           await users.doc(_currentUser!.email).update({
-            "lastSignInTime":
-                userCredential!.user!.metadata.lastSignInTime!.toString(),
+            "lastSignInTime": userCredential!.user!.metadata.lastSignInTime!
+                .toIso8601String(),
           });
         }
 
