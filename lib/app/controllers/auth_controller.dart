@@ -13,7 +13,7 @@ class AuthController extends GetxController {
   UserCredential? userCredential;
   UserModel user = UserModel();
 
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
